@@ -9,7 +9,8 @@ let apiToken: string | null = null;
 let apiResponse: AxiosResponse;
 
 Given('I use seed data', () => {
-  execSync('npx prisma migrate reset --force --skip-generate > /dev/null');
+  execSync('npx prisma migrate reset --force > /dev/null');
+  execSync('npm run database:seed > /dev/null');
 });
 
 Given('I use admin token', async () => {
