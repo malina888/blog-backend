@@ -23,9 +23,6 @@ export class UpdateArticleHandler implements ICommandHandler<UpdateArticleComman
       throw new ArticleNotFoundError();
     }
 
-    await this.repository.update(command.id, {
-      title: command.data.title,
-      content: command.data.content,
-    });
+    await this.repository.update(command.id, command.data);
   }
 }

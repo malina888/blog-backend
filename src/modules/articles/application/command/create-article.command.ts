@@ -16,11 +16,8 @@ export class CreateArticleHandler implements ICommandHandler<CreateArticleComman
   constructor(private readonly repository: ArticleRepository) {}
 
   async execute(command: CreateArticleCommand): Promise<void> {
-    await this.repository.create({
-      id: command.id,
-      title: command.data.title,
-      content: command.data.content,
-      publishedAt: new Date(),
-    });
+    const publishedAt = new Date();
+
+    await this.repository.create(command.id, publishedAt, command.data);
   }
 }

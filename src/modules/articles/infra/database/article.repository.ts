@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../../../core/prisma/prisma.service';
 import { Article } from '../../model/article.model';
+import { ArticleRequest } from '../http/request/article.request';
 
 @Injectable()
 export class ArticleRepository {
@@ -17,16 +18,17 @@ export class ArticleRepository {
   }
 
   async create(
-    article: Omit<Article, 'createdAt' | 'updatedAt'>,
+    id: string,
+    publishedAt: Date,
+    data: ArticleRequest,
   ): Promise<void> {
-    await this.prisma.article.create({ data: article });
+    await this.prisma.article.create({
+      data: { id, publishedAt, ...data },
+    });
   }
 
-  async update(
-    id: string,
-    article: Pick<Article, 'title' | 'content'>,
-  ): Promise<void> {
-    await this.prisma.article.update({ where: { id }, data: article });
+  async update(id: string, data: ArticleRequest): Promise<void> {
+    await this.prisma.article.update({ where: { id }, data: { ...data } });
   }
 
   async delete(id: string): Promise<void> {
