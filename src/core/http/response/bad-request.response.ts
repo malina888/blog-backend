@@ -17,7 +17,7 @@ export class GenericBadRequestResponse<RequestObj> {
     description:
       'If errors are related to specific fields, they will be listed here',
     example: {
-      registration: ['Registration must be unique'],
+      title: ['title must be longer than or equal to 3 characters'],
     },
     required: false,
   })

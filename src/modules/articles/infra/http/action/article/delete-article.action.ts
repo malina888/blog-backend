@@ -18,8 +18,8 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AdminGuard } from '../../../../../../core/http/auth/admin.guard';
-import { GenericBadRequestResponse } from '../../../../../../core/http/response/bad-request.response';
 import { ForbiddenResponse } from '../../../../../../core/http/response/forbidden.response';
+import { InvalidUuidResponse } from '../../../../../../core/http/response/invalid-uuid.response';
 import { GenericNotFoundResponse } from '../../../../../../core/http/response/not-found.response';
 import { UnauthorizedResponse } from '../../../../../../core/http/response/unauthorized.response';
 import { UuidParam } from '../../../../../../core/validation/decorator/uuid-v4-param.decorator';
@@ -39,7 +39,7 @@ export class DeleteArticleAction {
   @ApiNoContentResponse({ description: 'The article was deleted' })
   @ApiBadRequestResponse({
     description: 'The ID is not a valid UUID v4',
-    type: GenericBadRequestResponse,
+    type: InvalidUuidResponse,
   })
   @ApiUnauthorizedResponse({
     description: 'No admin token was sent',
