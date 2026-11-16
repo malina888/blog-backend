@@ -8,6 +8,10 @@ const apiBaseUrl = 'http://localhost:3000';
 let apiToken: string | null = null;
 let apiResponse: AxiosResponse;
 
+function authorizationHeader(): Record<string, string> {
+  return apiToken === null ? {} : { Authorization: `Bearer ${apiToken}` };
+}
+
 Given('I use seed data', () => {
   execSync('npx prisma migrate reset --force > /dev/null');
   execSync('npm run database:seed > /dev/null');
@@ -21,6 +25,14 @@ Given('I use destructive actions token', async () => {
   apiToken = 'destructive-actions-token';
 });
 
+Given('I use no token', () => {
+  apiToken = null;
+});
+
+Given('I use a wrong token', () => {
+  apiToken = 'wrong-token';
+});
+
 When(
   'I send a {string} request to {string}',
   async (method: string, path: string) => {
@@ -29,7 +41,7 @@ When(
       method: method,
       url: url,
       validateStatus: () => true,
-      headers: apiToken === '' ? {} : { Authorization: `Bearer ${apiToken}` },
+      headers: authorizationHeader(),
     });
   },
 );
@@ -43,7 +55,7 @@ When(
       url: url,
       data: JSON.parse(body),
       validateStatus: () => true,
-      headers: apiToken === '' ? {} : { Authorization: `Bearer ${apiToken}` },
+      headers: authorizationHeader(),
     });
   },
 );
