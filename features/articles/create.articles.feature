@@ -1,6 +1,6 @@
 Feature: As the author I can create blog articles
 
-  Scenario: As the author I can create an article and see it in the list
+  Scenario: As the author I can create an article, and visitors see it in the list without a token
     Given I use seed data
     And I use admin token
     When I send a "POST" request to "/api/v1/articles" with body:
@@ -22,7 +22,8 @@ Feature: As the author I can create blog articles
         "updatedAt": "@date('within 1 minute from now')"
       }
       """
-    When I send a "GET" request to "/api/v1/articles"
+    When I use no token
+    And I send a "GET" request to "/api/v1/articles"
     Then the response status should be 200
     And the response body should list the "title" values in this order:
       """
