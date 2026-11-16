@@ -28,4 +28,8 @@ export class ArticleRepository {
   ): Promise<void> {
     await this.prisma.article.update({ where: { id }, data: article });
   }
+
+  async delete(id: string): Promise<void> {
+    await this.prisma.article.delete({ where: { id } });
+  }
 }
