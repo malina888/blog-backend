@@ -15,4 +15,10 @@ export class ArticleRepository {
   async findById(id: string): Promise<Article | null> {
     return this.prisma.article.findUnique({ where: { id } });
   }
+
+  async create(
+    article: Omit<Article, 'createdAt' | 'updatedAt'>,
+  ): Promise<void> {
+    await this.prisma.article.create({ data: article });
+  }
 }
