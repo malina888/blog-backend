@@ -21,4 +21,11 @@ export class ArticleRepository {
   ): Promise<void> {
     await this.prisma.article.create({ data: article });
   }
+
+  async update(
+    id: string,
+    article: Pick<Article, 'title' | 'content'>,
+  ): Promise<void> {
+    await this.prisma.article.update({ where: { id }, data: article });
+  }
 }
