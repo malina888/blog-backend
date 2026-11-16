@@ -9,7 +9,8 @@ let apiToken: string | null = null;
 let apiResponse: AxiosResponse;
 
 Given('I use seed data', () => {
-  execSync('npx prisma migrate reset --force --skip-generate > /dev/null');
+  execSync('npx prisma migrate reset --force > /dev/null');
+  execSync('npm run database:seed > /dev/null');
 });
 
 Given('I use admin token', async () => {
@@ -64,6 +65,18 @@ Then('the response body should contain:', async function (docString: string) {
 
   deepCompare(actual, expected);
 });
+
+Then(
+  'the response body should list the {string} values in this order:',
+  (property: string, docString: string) => {
+    const expected = JSON.parse(docString);
+    const actual = apiResponse.data.map(
+      (item: Record<string, unknown>) => item[property],
+    );
+
+    expect(actual).toEqual(expected);
+  },
+);
 
 Then('I dump response', () => {
   console.log(JSON.stringify(apiResponse.data));
