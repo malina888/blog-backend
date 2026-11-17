@@ -26,6 +26,14 @@ docker compose up -d --build
 On every start the container installs packages, runs the database migrations and loads the seed data. When it is
 ready, the API documentation (Swagger UI) is at http://localhost/api.
 
+## Writing articles
+
+Everyone can read articles. Creating, editing and deleting them needs the admin token, sent in the
+`Authorization: Bearer <token>` header. The token is the `ADMIN_TOKEN` setting in `.env`. The value in `.env.dist` is
+for local development only: never use it anywhere else.
+
+In Swagger UI, click **Authorize** and paste the token alone, without the word `Bearer`.
+
 ## Running commands
 
 Run every `npm` and `npx` command inside the app container, not on your machine:

@@ -8,7 +8,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { GenericBadRequestResponse } from '../../../../../../core/http/response/bad-request.response';
+import { InvalidUuidResponse } from '../../../../../../core/http/response/invalid-uuid.response';
 import { GenericNotFoundResponse } from '../../../../../../core/http/response/not-found.response';
 import { UuidParam } from '../../../../../../core/validation/decorator/uuid-v4-param.decorator';
 import { GetArticleByIdQuery } from '../../../../application/query/get-article-by-id.query';
@@ -25,7 +25,7 @@ export class GetArticleAction {
   @ApiOkResponse({ description: 'The whole article', type: ArticleResponse })
   @ApiBadRequestResponse({
     description: 'The ID is not a valid UUID v4',
-    type: GenericBadRequestResponse,
+    type: InvalidUuidResponse,
   })
   @ApiNotFoundResponse({
     description: 'There is no article with this ID',
